@@ -7,9 +7,11 @@ export default {
         'work-sans': ['Work Sans', 'sans-serif'],
         lobster: ['Lobster', 'cursive'],
         'kaushan': ['Kaushan Script', 'cursive'],
+        inter: ['Inter', 'sans-serif'],
       },
       colors: {
-        'Salmon-Red': '#FF4D4D',
+        'Salmon-Red': '#FC5056',
+        'Gray-2' : '#A9AFBB',
       }
     },
   },
