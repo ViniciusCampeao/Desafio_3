@@ -3,6 +3,7 @@ import 'swiper/swiper-bundle.css';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
+import './partials/carousel.css';
 
 interface CarouselItem {
   imageUrl: string;
@@ -14,11 +15,11 @@ interface CarouselItem {
   price: number;
 }
 
-interface CarrosselComponentProps {
+interface CarouselComponentProps {
   data: CarouselItem[];
 }
 
-function CarrosselComponent({ data }: CarrosselComponentProps) {
+function CarouselComponent({ data }: CarouselComponentProps) {
   return (
     <div className="
       w-full 
@@ -109,6 +110,11 @@ function CarrosselComponent({ data }: CarrosselComponentProps) {
                 </p>
               </div>
             </div>
+            <div
+                className="
+              mt-14
+              "
+              ></div>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -116,4 +122,4 @@ function CarrosselComponent({ data }: CarrosselComponentProps) {
   );
 }
 
-export default CarrosselComponent;
+export default CarouselComponent;
