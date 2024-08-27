@@ -1,4 +1,4 @@
-import Search from "../Filter-Search";
+import Search from "../FilterSearch";
 
 function Travel() {
   return (
