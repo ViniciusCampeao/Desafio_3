@@ -14,6 +14,7 @@ const Search = () => {
       max-w-5xl 
       mx-auto
       bg-white
+      font-work-sans
       "
     >
       <div
