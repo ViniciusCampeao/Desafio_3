@@ -10,8 +10,8 @@ function Travel() {
           alt="background"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center bg-black bg-opacity-40">
-          <h1 className="text-Salmon-Red font-lobster text-3xl mb-2">Save 15% Off Worldwide</h1>
-          <h2 className="text-white text-6xl font-bold mb-3 font-sans">Travel & Adventures</h2>
+          <h1 className="text-Salmon-Red font-kaushan text-3xl mb-2">Save 15% Off Worldwide</h1>
+          <h2 className="text-white text-5xl font-bold mb-3 font-sans">Travel & Adventures</h2>
           <p className="text-white text-sm font-sans font-bold">Find awesome hotel, tour, car, and activities in London</p>
         </div>
       </div>

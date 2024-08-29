@@ -1,4 +1,5 @@
 import { CiLogin, CiSearch } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -18,6 +19,7 @@ const Header = () => {
           ml-8
         "
         >
+          <Link to={"/"}>
           <img
             src="https://mybucketomyproject.s3.us-east-2.amazonaws.com/logo.png"
             alt="Logo"
@@ -25,6 +27,7 @@ const Header = () => {
             h-20
           "
           />
+          </Link>
         </div>
 
         <nav
@@ -42,75 +45,75 @@ const Header = () => {
           "
           >
             <li>
-              <a
-                href="#home"
+              <Link
+                to="/"
                 className="
                 text-red-500
                 hover:text-red-700
               "
               >
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#about"
+              <Link
+                to={"/about"}
                 className="
                 hover:text-red-500
               "
               >
                 About
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#tours"
+              <Link
+                to={"/tours"}
                 className="
                 hover:text-red-500
                 "
               >
                 Tours
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#destination"
+              <Link
+                to={"/destination"}
                 className="
                 hover:text-red-500
               "
               >
                 Destination
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#blog"
+              <Link
+                to={"/blog"}
                 className="
                 hover:text-red-500
               "
               >
                 Blog
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#pages"
+              <Link
+                to={"/pages"}
                 className="
                 hover:text-red-500
               "
               >
                 Pages
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#contact"
+              <Link
+                to={"/contact"}
                 className="
                 hover:text-red-500
               "
               >
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
@@ -135,8 +138,8 @@ const Header = () => {
             <CiSearch size={20} />
           </button>
 
-          <a
-            href="./signin"
+          <Link
+            to="/login"
             className="
             grid
             gap-2
@@ -150,10 +153,10 @@ const Header = () => {
           >
             <CiLogin size={20} />
             Login
-          </a>
+          </Link>
           <span>/</span>
-          <a
-            href="./signup"
+          <Link
+            to={"/signup"}
             className="
             transform
             transition-transform
@@ -163,7 +166,7 @@ const Header = () => {
           "
           >
             SignUp
-          </a>
+          </Link>
         </div>
       </div>
     </header>
