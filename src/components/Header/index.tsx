@@ -1,7 +1,21 @@
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { CiLogin, CiSearch } from "react-icons/ci";
-import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { auth } from "../../firebaseConfig";
 
-const Header = () => {
+const Header: React.FC = () => {
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
+  const handleLogoutClick = () => {
+    auth.signOut();
+  };
+
   return (
     <header className="bg-white">
       <div
@@ -20,13 +34,13 @@ const Header = () => {
         "
         >
           <Link to={"/"}>
-          <img
-            src="https://mybucketomyproject.s3.us-east-2.amazonaws.com/logo.png"
-            alt="Logo"
-            className="
-            h-20
-          "
-          />
+            <img
+              src="https://mybucketomyproject.s3.us-east-2.amazonaws.com/logo.png"
+              alt="Logo"
+              className="
+              h-20
+            "
+            />
           </Link>
         </div>
 
@@ -137,36 +151,26 @@ const Header = () => {
           >
             <CiSearch size={20} />
           </button>
-
-          <Link
-            to="/login"
-            className="
-            grid
-            gap-2
-            grid-flow-col
-            transform
-            transition-transform
-            duration-300
-            ease-in-out
-            hover:-translate-y-1
-          "
-          >
-            <CiLogin size={20} />
-            Login
-          </Link>
-          <span>/</span>
-          <Link
-            to={"/signup"}
-            className="
-            transform
-            transition-transform
-            duration-300
-            ease-in-out
-            hover:-translate-y-1
-          "
-          >
-            SignUp
-          </Link>
+          {!currentUser ? (
+            <button
+              onClick={handleLoginClick}
+              className="
+              grid
+              gap-2
+              grid-flow-col
+              transform
+              transition-transform
+              duration-300
+              ease-in-out
+              hover:-translate-y-1
+            "
+            >
+              <CiLogin size={20} />
+              Login
+            </button>
+          ) : (
+            <button onClick={handleLogoutClick}>Logout</button>
+          )}
         </div>
       </div>
     </header>
