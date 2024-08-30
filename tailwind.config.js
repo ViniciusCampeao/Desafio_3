@@ -12,6 +12,7 @@ export default {
       colors: {
         'Salmon-Red': '#FC5056',
         'Gray-2' : '#A9AFBB',
+        'Gray-3' : '#D9D9D9',
       }
     },
   },
