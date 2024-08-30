@@ -1,32 +1,83 @@
+import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import './partials/carousel.css';
+import Card from '../Card';
 
-interface CarouselItem {
-  imageUrl: string;
-  city: string;
-  country: string;
-  rating: number;
-  reviews: number;
-  duration: number;
-  price: number;
+import { getTours, getCityById, getCountryById } from '../../axiosClient/apiClient';
+import { Tour } from '../../axiosClient/types';
+
+interface CityData {
+  id: number;
+  name: string;
 }
 
-interface CarouselComponentProps {
-  data: CarouselItem[];
+interface CountryData {
+  id: number;
+  name: string;
 }
 
-function CarouselComponent({ data }: CarouselComponentProps) {
+function CarouselComponent() {
+  const [tours, setTours] = useState<Tour[]>([]);
+  const [cities, setCities] = useState<Map<number, CityData>>(new Map());
+  const [countries, setCountries] = useState<Map<number, CountryData>>(new Map());
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchTours = async () => {
+      try {
+        const response = await getTours();
+        const toursData = response.data;
+        setTours(toursData);
+
+        const cityIds = new Set<number>(
+          toursData
+            .map(tour => tour.cityId)
+            .filter((id): id is number => id !== undefined)
+        );
+        const countryIds = new Set<number>(
+          toursData
+            .map(tour => tour.countryId)
+            .filter((id): id is number => id !== undefined)
+        );
+
+        const cityPromises = Array.from(cityIds).map(id => getCityById(id));
+        const cityResponses = await Promise.all(cityPromises);
+        const cityMap = new Map<number, CityData>(
+          cityResponses
+            .map(res => res.data)
+            .filter(data => data.id && data.name)
+            .map(data => [data.id, data] as [number, CityData])
+        );
+        setCities(cityMap);
+
+        const countryPromises = Array.from(countryIds).map(id => getCountryById(id));
+        const countryResponses = await Promise.all(countryPromises);
+        const countryMap = new Map<number, CountryData>(
+          countryResponses
+            .map(res => res.data)
+            .filter(data => data.id && data.name)
+            .map(data => [data.id, data] as [number, CountryData])
+        );
+        setCountries(countryMap);
+
+      } catch (error) {
+        console.error('Error fetching tours:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTours();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+
   return (
-    <div className="
-      w-full 
-      max-w-5xl 
-      mx-auto 
-      py-6
-    ">
+    <div className="w-full max-w-5xl mx-auto py-6">
       <Swiper
         slidesPerView={4}
         spaceBetween={20}
@@ -36,87 +87,23 @@ function CarouselComponent({ data }: CarouselComponentProps) {
         modules={[Pagination]}
         className="mySwiper"
       >
-        {data.map((item: CarouselItem, index: number) => (
-          <SwiperSlide key={index}>
-            <div className="
-              bg-white 
-              shadow-md 
-              rounded-lg 
-              p-4
-            ">
-              <img
-                src={item.imageUrl}
-                alt={`${item.city}, ${item.country}`}
-                className="
-                  w-full 
-                  h-32 
-                  object-cover 
-                  rounded-t-lg
-                "
-              />
-              <div className="
-                mt-4 
-                text-center
-              ">
-                <h2 className="
-                  text-lg 
-                  font-semibold
-                ">
-                  {item.city}, {item.country}
-                </h2>
-                <div className="
-                  flex 
-                  items-center 
-                  justify-center 
-                  mt-2
-                ">
-                  {[...Array(5)].map((_, i) => (
-                    <svg
-                      key={i}
-                      className={`
-                        w-4 
-                        h-4 
-                        fill-current 
-                        ${i < item.rating ? 'text-yellow-500' : 'text-gray-300'}
-                      `}
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M10 15l-5.878 3.09 1.122-6.545L1 7.055l6.561-.955L10 1l2.439 5.1 6.561.955-4.244 4.49 1.122 6.545z" />
-                    </svg>
-                  ))}
-                  <span className="
-                    text-gray-600 
-                    text-sm 
-                    ml-2
-                  ">
-                    ({item.reviews} reviews)
-                  </span>
-                </div>
-                <p className="
-                  text-gray-600 
-                  text-sm 
-                  mt-2
-                ">
-                  Duration: {item.duration} days
-                </p>
-                <p className="
-                  text-gray-800 
-                  text-base 
-                  mt-2 
-                  font-semibold
-                ">
-                  Starting from <span className="text-Salmon-Red">${item.price}</span>
-                </p>
-              </div>
-            </div>
-            <div
-                className="
-              mt-14
-              "
-              ></div>
+        {tours.map((tour) => (
+          <SwiperSlide key={tour.id}>
+            <Card 
+              CardImg={tour.urlImage || ''} 
+              TourCity={cities.get(tour.cityId)?.name || 'Unknown City'}
+              TourCountry={countries.get(tour.countryId)?.name || 'Unknown Country'}
+              TourTitle={tour.name}
+              TourAvaliation={tour.avarageRating ?? 0}
+              AmountReview={15} 
+              TourDuration={tour.duration}
+              TourPrice={100} 
+            />
           </SwiperSlide>
         ))}
+      <div className="mt-10">
+
+      </div>
       </Swiper>
     </div>
   );
