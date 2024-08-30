@@ -80,7 +80,6 @@ const SignIn: React.FC = () => {
 
   return (
     <div className="
-      bg-[#f9f9f9]
       grid
       grid-cols-2
       place-items-center

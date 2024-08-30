@@ -1,14 +1,14 @@
 import ItemsFixe from "../components/FixeItems";
 import Header from "../components/Header";
 import SectionTitleCarousel from "../components/SectionTitle";
-import Travel from "../components/Travel";
-import ImageGrid from "../components/GridTopDestinations/ImageExport";
+import Travel from "../components/FirstSectionBg";
 import WhyChoose from "../components/WhyChooseUs";
 import ExportCarousel2 from "../components/Carousel2/partials/Export";
-import ExportCarousel1 from "../components/Carousel/partials/export";
 import Assessment from "../components/AssessmentComponent";
 import TravelGuide from "../components/TravelGuide";
 import Footer from "../components/Footer";
+import GridItem from "../components/GridTopDestinations";
+import CarouselComponent from "../components/Carousel";
 
 function Home() {
   return (
@@ -18,7 +18,7 @@ function Home() {
         <Travel />
         <div className="mt-40">
           <SectionTitleCarousel title="Tours" subtitle="Most Popular Tours" />
-          <ExportCarousel1 />
+          <CarouselComponent />
           <ItemsFixe />
         </div>
         <div className="mt-36">
@@ -28,7 +28,7 @@ function Home() {
           />
         </div>
       </div>
-      <ImageGrid />
+      <GridItem />
       <WhyChoose />
       <div className="mt-36">
         <SectionTitleCarousel
