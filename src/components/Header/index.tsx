@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CiLogin, CiSearch } from "react-icons/ci";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { auth } from "../../firebaseConfig";
 
 const Header: React.FC = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, loading } = useAuth();
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
@@ -16,7 +16,45 @@ const Header: React.FC = () => {
     auth.signOut();
   };
 
-  return (
+  if (loading) {
+    return (
+      <header className="bg-white">
+        <div
+          className="
+          flex
+          justify-between
+          items-center
+          font-work-sans
+        "
+        >
+          <div className="flex items-center ml-8">
+            <img
+              src="https://mybucketomyproject.s3.us-east-2.amazonaws.com/logo.png"
+              alt="Logo"
+              className="h-20"
+            />
+          </div>
+
+          <div
+            className="
+            flex-1
+            ml-14
+            text-center
+          "
+          >
+            <p>Loading...</p>
+          </div>
+
+          <div className="flex items-center space-x-4 mr-14">
+            <button className="transform transition-transform duration-300 ease-in-out hover:-translate-y-1">
+              <CiSearch size={20} />
+            </button>
+          </div>
+        </div>
+      </header>
+    );
+  }
+  return(
     <header className="bg-white">
       <div
         className="
