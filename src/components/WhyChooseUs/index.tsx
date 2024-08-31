@@ -99,6 +99,7 @@ const WhyChoose = () => {
           text-base
           font-semibold
           font-inter
+          hover:bg-Salmon-Red
           "
           >
             Contact Us

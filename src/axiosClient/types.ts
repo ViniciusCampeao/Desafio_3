@@ -14,6 +14,7 @@ export interface Tour {
   overview: string;
   typeId: number;
   minAge: number;
+  price: number;
 }
 
 

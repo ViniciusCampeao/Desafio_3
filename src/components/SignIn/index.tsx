@@ -215,7 +215,7 @@ const SignIn: React.FC = () => {
         </div>
       </div>
       <div>
-        <img src="./public/LoginBg.jpg" alt="login" />
+        <img src="https://mybucketomyproject.s3.us-east-2.amazonaws.com/LoginBg.jpg" alt="login" />
       </div>
     </div>
   );
