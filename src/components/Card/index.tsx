@@ -1,5 +1,5 @@
 import React from "react";
-import { CiClock1, CiStar } from "react-icons/ci";
+import { CiClock1, CiHeart, CiStar } from "react-icons/ci";
 
 interface CardProps {
   CardImg: string;
@@ -27,13 +27,29 @@ const Card: React.FC<CardProps> = ({
       className="
     w-[270px]
     h-[401px]
+    relative
     "
     >
+      <div className="
+      absolute
+      rounded-full
+      bg-Gray-3
+      flex
+      justify-center
+      items-center
+      w-10
+      h-10
+      top-2
+      right-3
+      hover:bg-Salmon-Red
+      "
+      >
+        <CiHeart />
+      </div>
       <img
         className="
       h-[220px]
       w-[270px]
-      object-cover
       "
         src={CardImg}
         alt="CardImage"
