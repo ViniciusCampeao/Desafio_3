@@ -1,6 +1,6 @@
-import Card from "../components/Card";
 import Header from "../components/Header";
 import Bg2 from "../components/SecondSectionBg";
+import Tour from "../components/Tour";
 
 const Tours = () => {
   return (
@@ -12,16 +12,7 @@ const Tours = () => {
         subtitle="Home /"
         subtitle2="Tour Package"
       />
-      <Card 
-      CardImg="https://mybucketomyproject.s3.us-east-2.amazonaws.com/Bg2.png" 
-      TourCity="Budapest"
-      TourCountry="Hungary" 
-      TourTitle="Wonder of the West Coast & Kimberley"
-      TourAvaliation={4.5}
-      AmountReview={20}
-      TourDuration={7}
-      TourPrice={520}
-      />
+      <Tour/>
     </div>
   );
 }
