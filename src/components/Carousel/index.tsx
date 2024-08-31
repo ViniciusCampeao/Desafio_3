@@ -31,15 +31,17 @@ function CarouselComponent() {
       try {
         const response = await getTours();
         const toursData = response.data;
-        setTours(toursData);
+
+        const filteredTours = toursData.filter(tour => (tour.avarageRating ?? 0) >= 4.8);
+        setTours(filteredTours);
 
         const cityIds = new Set<number>(
-          toursData
+          filteredTours
             .map(tour => tour.cityId)
             .filter((id): id is number => id !== undefined)
         );
         const countryIds = new Set<number>(
-          toursData
+          filteredTours
             .map(tour => tour.countryId)
             .filter((id): id is number => id !== undefined)
         );
@@ -74,13 +76,17 @@ function CarouselComponent() {
     fetchTours();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return (
+    <div className="w-full max-w-5xl mx-auto py-6">
+      <p>Loading...</p>
+    </div>
+  );
 
   return (
     <div className="w-full max-w-5xl mx-auto py-6">
       <Swiper
         slidesPerView={4}
-        spaceBetween={20}
+        spaceBetween={150}
         pagination={{
           clickable: true,
         }}
@@ -97,7 +103,7 @@ function CarouselComponent() {
               TourAvaliation={tour.avarageRating ?? 0}
               AmountReview={15} 
               TourDuration={tour.duration}
-              TourPrice={100} 
+              TourPrice={tour.price}
             />
           </SwiperSlide>
         ))}
