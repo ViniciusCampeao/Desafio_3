@@ -13,6 +13,7 @@ export default {
         'Salmon-Red': '#FC5056',
         'Gray-2' : '#A9AFBB',
         'Gray-3' : '#D9D9D9',
+        'Gray-4' : '#F7F8FA',
       }
     },
   },
