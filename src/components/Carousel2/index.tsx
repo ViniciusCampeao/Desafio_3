@@ -1,29 +1,50 @@
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
+import { getTypesCount } from "../../axiosClient/apiClient";
 
-interface CarouselItem {
-  category: string;
+interface Type {
+  id: number;
+  name: string;
   tours: number;
-  price: number;
-  imageUrl: string;
 }
 
-interface CarrosselComponentProps {
-  data: CarouselItem[];
-}
+const TypesCarousel: React.FC = () => {
+  const [types, setTypes] = useState<Type[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-function SecondCarrosselComponent({ data }: CarrosselComponentProps) {
+  useEffect(() => {
+    const fetchTypes = async () => {
+      try {
+        const response = await getTypesCount();
+        setTypes(response.data);
+      } catch (error) {
+        console.error("Error fetching types:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTypes();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  const duplicatedTypes = [...types, ...types, ...types];
+
   return (
     <div
       className="
-        w-full 
-        max-w-5xl 
-        mx-auto 
-        py-6
-      "
+    w-full
+    max-w-5xl
+    mx-auto
+    py-6
+    "
     >
       <Swiper
         slidesPerView={6}
@@ -34,63 +55,70 @@ function SecondCarrosselComponent({ data }: CarrosselComponentProps) {
         modules={[Pagination]}
         className="mySwiper"
       >
-        {data.map((item: CarouselItem, index: number) => (
-          <SwiperSlide key={index}>
+        {duplicatedTypes.map((type) => (
+          <SwiperSlide key={type.id}>
             <div
               className="
-                bg-white 
-                p-4 
-                border
-                rounded-lg
-                border-solid
-                border-[#A9AFBB]
-              "
+          bg-white
+          p-4
+          border
+          rounded-lg
+          border-solid
+          border-Gray-2
+          "
             >
-              <img
-                src={item.imageUrl}
-                alt={`${item.category}`}
-                className="mb-2"
-              />
+              <img src="" alt="" className="mb-2" />
               <div className="mt-4">
-                <h2 
+                <h2
                   className="
-                    text-base 
-                    font-bold 
-                    font-sans
-                  "
+              text-base
+              font-bold
+              font-sans
+              "
                 >
-                  {item.category}
+                  {type.name}
                 </h2>
-                <p 
+                <div
                   className="
                     text-[#A9AFBB] 
                     text-sm
+                    flex
+                    gap-1
                   "
                 >
-                  {item.tours} 
+                  <p>
+                  {type.tours}
+                  </p>
+                  <p>
                   Tours+
-                </p>
-                <div className="flex mt-5">
-                  <p 
+                  </p>
+                </div>
+                <div
+                  className="
+              flex
+              mt-5
+              "
+                >
+                  <p
                     className="
-                      text-[#A9AFBB] 
-                      text-base 
-                      font-semibold 
-                      font-sans
-                    "
+                text-Gray-2
+                text-base
+                font-semibold
+                font-sans
+                "
                   >
                     From
                   </p>
-                  <p 
+                  <p
                     className="
-                      text-Salmon-Red 
-                      text-base 
-                      font-semibold 
-                      font-kaushan 
-                      ml-3
-                    "
+                text-Salmon-Red
+                text-base
+                font-semibold
+                font-kaushan
+                ml-3
+                "
                   >
-                    ${item.price}
+                    $1000
                   </p>
                 </div>
               </div>
@@ -100,6 +128,6 @@ function SecondCarrosselComponent({ data }: CarrosselComponentProps) {
       </Swiper>
     </div>
   );
-}
+};
 
-export default SecondCarrosselComponent;
+export default TypesCarousel;
