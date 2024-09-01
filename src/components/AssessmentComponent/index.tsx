@@ -83,6 +83,7 @@ const AssessmentCarousel: React.FC = () => {
           slidesPerView={1}
           pagination={{ clickable: true, dynamicBullets: true }}
           modules={[Pagination]}
+          loop={true}
           className="w-full mt-4"
         >
           {assessments.map((assessment, index) => (
