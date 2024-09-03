@@ -21,6 +21,7 @@ export const updateReview = (id: number, data: Review) => apiClient.put<Review>(
 export const deleteReview = (id: number) => apiClient.delete<Review>(`/reviews/${id}`);
 
 export const getTypes = () => apiClient.get<Type[]>('/types');
+export const getTypesCount = () => apiClient.get<Type[]>('/types-count');
 export const getTypeById = (id: number) => apiClient.get<Type>(`/types/${id}`);
 export const createType = (data: Type) => apiClient.post<Type>('/types', data);
 export const updateType = (id: number, data: Type) => apiClient.put<Type>(`/types/${id}`, data);
