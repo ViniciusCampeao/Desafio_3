@@ -1,10 +1,9 @@
-import  { useState, useEffect } from "react";
-import { CiSearch } from "react-icons/ci";
+import React, { useState, useEffect } from "react";
 import './partials/Slider.css';
 import { Tour } from "../../axiosClient/types";
+import Filters from "./partials/Filters";
 import Card from "../Card";
-
-import { getTours, getCityById, getCountryById} from '../../axiosClient/apiClient';
+import { getTours, getCityById, getCountryById } from '../../axiosClient/apiClient';
 
 interface CityData {
   id: number;
@@ -16,27 +15,30 @@ interface CountryData {
   name: string;
 }
 
-const TourPage = () => {
+const TourPage: React.FC = () => {
   const [tours, setTours] = useState<Tour[]>([]);
+  const [filteredTours, setFilteredTours] = useState<Tour[]>([]);
   const [cities, setCities] = useState<Map<number, CityData>>(new Map());
   const [countries, setCountries] = useState<Map<number, CountryData>>(new Map());
   const [loading, setLoading] = useState<boolean>(true);
+  const [maxPrice, setMaxPrice] = useState<number>(3000);
 
   useEffect(() => {
     const fetchTours = async () => {
       try {
         const response = await getTours();
-        const limitedTours = response.data.slice(0, 30);
-        setTours(limitedTours);
+        const fetchedTours = response.data;
+        setTours(fetchedTours);
+        setFilteredTours(fetchedTours);
 
         const cityIds = new Set<number>(
-          limitedTours
+          fetchedTours
             .map(tour => tour.cityId)
             .filter((id): id is number => id !== undefined)
         );
 
         const countryIds = new Set<number>(
-          limitedTours
+          fetchedTours
             .map(tour => tour.countryId)
             .filter((id): id is number => id !== undefined)
         );
@@ -62,14 +64,30 @@ const TourPage = () => {
         setCountries(countryMap);
       } catch (error) {
         console.error('Error fetching tours:', error);
-      }
-      finally {
+      } finally {
         setLoading(false);
       }
     };
 
     fetchTours();
   }, []);
+
+  const handleSearch = (searchTerm: string) => {
+    const lowercasedSearchTerm = searchTerm.toLowerCase();
+    const filtered = tours.filter(tour =>
+      tour.name.toLowerCase().includes(lowercasedSearchTerm)
+    );
+    setFilteredTours(filtered);
+  };
+
+  const handlePriceChange = (price: number) => {
+    setMaxPrice(price);
+  };
+
+  const handleSubmit = () => {
+    const filtered = tours.filter(tour => tour.price <= maxPrice);
+    setFilteredTours(filtered);
+  };
 
   if (loading) return (
     <div className="w-full max-w-5xl mx-auto py-6">
@@ -79,71 +97,14 @@ const TourPage = () => {
 
   return (
     <div className="mt-32 mx-[130px]">
-      <form className="grid grid-cols-12 gap-[32px]">
+      <div className="grid grid-cols-12 gap-[32px]">
         <div className="col-span-3">
-          <div className="bg-[#F7F8FA] px-[30px] py-[28px]">
-            <h6 className="font-work-sans text-lg font-extrabold">Search</h6>
-            <div className="relative flex">
-              <input
-                className="text-Gray-2 font-work-sans p-2 pr-10 mt-1"
-                type="text"
-                placeholder="Type anything..."
-              />
-              <CiSearch className="absolute top-3 right-10 w-5 h-5 text-Gray-2" />
-            </div>
-          </div>
-
-          <div className="mt-16 bg-[#F7F8FA] px-[30px] py-[28px]">
-            <h6 className="font-work-sans text-lg font-extrabold">Filter By</h6>
-            <div className="relative mt-2">
-              <input
-                type="range"
-                min="0"
-                max="3000"
-                step="10"
-                className="slider"
-              />
-              <div className="flex justify-between mt-2">
-                <span className="font-work-sans font-bold text-base">$0</span>
-                <span className="font-work-sans font-bold text-base mr-14">$3000</span>
-              </div>
-            </div>
-            <button
-              type="submit"
-              className="
-              bg-Salmon-Red
-              text-white
-              font-work-sans
-              text-base
-              rounded-[4px]
-              w-20
-              h-10
-              mt-4
-              "
-            >
-              Submit
-            </button>
-          </div>
-
-          <div className="mt-16 bg-[#F7F8FA] px-[30px] py-[28px]">
-            <h6 className="font-work-sans text-lg font-extrabold">Categories</h6>
-            <div className="mt-2">
-              {/* Placeholder para os checkboxes de categorias, atualmente desabilitados */}
-              <div className="flex items-center mt-2">
-                <input type="checkbox" disabled className="mr-2" />
-                <label className="font-work-sans text-base">Category 1</label>
-              </div>
-              <div className="flex items-center mt-2">
-                <input type="checkbox" disabled className="mr-2" />
-                <label className="font-work-sans text-base">Category 2</label>
-              </div>
-            </div>
-          </div>
+          <Filters onSearch={handleSearch} onPriceChange={handlePriceChange} onSubmit={handleSubmit} />
         </div>
 
         <div className="col-span-9">
           <div className="grid grid-cols-3 gap-8">
-            {tours.map(tour => (
+            {filteredTours.map(tour => (
               <Card
                 key={tour.id}
                 TourId={tour.id ?? 0}
@@ -159,7 +120,7 @@ const TourPage = () => {
             ))}
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 };
