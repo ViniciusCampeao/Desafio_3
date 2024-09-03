@@ -20,7 +20,11 @@ interface CountryData {
   name: string;
 }
 
-function CarouselComponent() {
+interface CarouselComponentProps {
+  Reload?: boolean;
+}
+
+function CarouselComponent({ Reload = false }: CarouselComponentProps) {
   const [tours, setTours] = useState<Tour[]>([]);
   const [cities, setCities] = useState<Map<number, CityData>>(new Map());
   const [countries, setCountries] = useState<Map<number, CountryData>>(new Map());
@@ -104,7 +108,8 @@ function CarouselComponent() {
               AmountReview={15} 
               TourDuration={tour.duration}
               TourPrice={tour.price}
-              TourId={tour.id ?? 0}            
+              TourId={tour.id ?? 0}
+              Reload={Reload}
             />
           </SwiperSlide>
         ))}
