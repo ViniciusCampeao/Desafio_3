@@ -1,15 +1,21 @@
-import { useEffect, useState } from 'react';
-import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
-import { useParams } from 'react-router-dom';
-import { getTourById, getCityById, getCountryById, getTypeById } from '../../axiosClient/apiClient';
+import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useParams } from "react-router-dom";
+import {
+  getTourById,
+  getCityById,
+  getCountryById,
+  getTypeById,
+} from "../../axiosClient/apiClient";
 import { Tour } from "../../axiosClient/types";
 import FormTour from "./ComponentsTour/FormTour";
 import { CiShare2, CiHeart } from "react-icons/ci";
 import { FiMapPin } from "react-icons/fi";
 import TourInformations from "./ComponentsTour/FormTourInfo";
-import FormReview from "./ComponentsTour/FormReview";
 import AddReview from "./ComponentsTour/AddReviewTour";
+import LastReviewContainer from "./ComponentsTour/LastReview";
+import CarouselComponent from "../Carousel";
 
 interface CityData {
   id: number;
@@ -37,7 +43,7 @@ const TourDetailsComponent = () => {
   useEffect(() => {
     const fetchTour = async () => {
       try {
-        const response = await getTourById(parseInt(id ?? ''));
+        const response = await getTourById(parseInt(id ?? ""));
         setTour(response.data);
 
         if (response.data.cityId) {
@@ -53,18 +59,23 @@ const TourDetailsComponent = () => {
           setType(typeResponse.data);
         }
       } catch (error) {
-        console.error('Error fetching tour:', error);
+        console.error("Error fetching tour:", error);
       }
     };
 
     fetchTour();
   }, [id]);
 
+  const formattedDate = tour
+    ? new Date(tour.initialDate).toISOString().split("T")[0]
+    : "";
+
   if (!tour || !city || !country || !type) {
     return <div>Loading...</div>;
   }
 
   return (
+    <div>
     <div
       className="
       mx-[128px]
@@ -86,7 +97,8 @@ const TourDetailsComponent = () => {
           src={tour.urlImage}
           alt="img"
         />
-        <div className="
+        <div
+          className="
         flex
         justify-between
         mt-7
@@ -113,7 +125,8 @@ const TourDetailsComponent = () => {
               View on map
             </button>
           </div>
-          <div className="
+          <div
+            className="
           flex
           gap-2
           "
@@ -122,7 +135,8 @@ const TourDetailsComponent = () => {
             <CiHeart />
           </div>
         </div>
-        <h1 className="
+        <h1
+          className="
         mt-3
         font-extrabold
         text-3xl
@@ -131,7 +145,8 @@ const TourDetailsComponent = () => {
         >
           {tour.name}
         </h1>
-        <div className="
+        <div
+          className="
         h-[1px]
         w-full
         bg-Gray-3
@@ -148,7 +163,8 @@ const TourDetailsComponent = () => {
           reviewsCount={15}
           overview={tour.overview}
         />
-        <h1 className="
+        <h1
+          className="
         mt-7
         font-extrabold
         text-3xl
@@ -157,11 +173,38 @@ const TourDetailsComponent = () => {
         >
           Showing 1 review
         </h1>
-        <FormReview />
-        <AddReview tourId={tour.id ?? 0} userId={currentUser?.uid ?? ''}  />
+        <LastReviewContainer tourId={tour.id} />
+        <AddReview
+          tourId={tour.id ?? 0}
+          userId={currentUser?.uid ?? ""}
+          userName={""}
+        />
       </div>
-
-      <FormTour basePrice={100} />
+      <div>
+        <FormTour
+          basePrice={tour.price}
+          initialDate={formattedDate}
+          Time={tour.duration}
+        />
+      </div>
+    </div>
+    <div className="
+    mt-28
+    "
+    >
+      <h1
+              className="
+        mt-3
+        font-extrabold
+        text-3xl
+        font-work-sans
+        text-center
+        "
+            >
+              You may also like...
+            </h1>
+        <CarouselComponent Reload={true} />
+    </div>
     </div>
   );
 };

@@ -6,16 +6,17 @@ import { Review } from "../../../axiosClient/types";
 interface AddReviewProps {
   tourId: number;
   userId: string;
+  userName: string;
 }
 
-const AddReview: React.FC<AddReviewProps> = ({ tourId, userId }) => {
+const AddReview: React.FC<AddReviewProps> = ({ tourId, userId, userName }) => {
   const [serviceRating, setServiceRating] = useState(0);
   const [locationRating, setLocationRating] = useState(0);
   const [amenitiesRating, setAmenitiesRating] = useState(0);
   const [pricesRating, setPricesRating] = useState(0);
   const [comfortRating, setComfortRating] = useState(0);
   const [description, setDescription] = useState("");
-  const [name, setName] = useState("");
+  const [name, setName] = useState(userName);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,6 +45,8 @@ const AddReview: React.FC<AddReviewProps> = ({ tourId, userId }) => {
       description,
       tourId,
       userId,
+      userName: name,
+      createdAt: new Date(),
     };
 
     try {
@@ -56,7 +59,7 @@ const AddReview: React.FC<AddReviewProps> = ({ tourId, userId }) => {
       setPricesRating(0);
       setComfortRating(0);
       setDescription("");
-      setName("");
+      setName(userName);
       setEmail("");
     } catch (error) {
       console.error("Error submitting review:", error);
