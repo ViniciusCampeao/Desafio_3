@@ -1,6 +1,7 @@
 
 export interface Tour {
-  id?: number;
+  city: string;
+  id: number;
   urlImage: string;
   name: string;
   description: string;
@@ -17,19 +18,24 @@ export interface Tour {
   price: number;
 }
 
-
 export interface Review {
-  id?: number;
+  services: number;
+  location: number;
+  amenities?: number;
+  prices: number;
+  comfort: number;
+  description: string;
   tourId: number;
   userId: string;
-  rating: number;
-  comment: string;
+  createdAt?: Date;
 }
 
 
 export interface Type {
-  id?: number;
+  id: number;
   name: string;
+  count: string;
+  tours: number;
 }
 
 

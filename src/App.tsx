@@ -4,6 +4,7 @@ import Login from './pages/SignIn';
 import PrivateRoute from './components/PrivateRoute.tsx';
 import { AuthProvider } from './context/AuthContext';
 import Tours from './pages/Tours';
+import TourDetails from './pages/TourDetails.tsx';
 
 function App() {
   return (
@@ -16,6 +17,12 @@ function App() {
             path="/tours"
             element={
               <PrivateRoute element={<Tours />} />
+            }
+          />
+          <Route
+            path='/tour/:id'
+            element={
+              <PrivateRoute element={<TourDetails />} />
             }
           />
         </Routes>
