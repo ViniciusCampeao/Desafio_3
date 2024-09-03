@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 
 interface FormTourProps {
   basePrice: number;
+  initialDate?: string;
+  Time?: number;
 }
 
-const FormTour: React.FC<FormTourProps> = ({ basePrice }) => {
+const FormTour: React.FC<FormTourProps> = ({ basePrice, initialDate = "", Time = "" }) => {
   const [countAdults, setCountAdults] = useState(0);
   const [countKids, setCountKids] = useState(0);
   const [countChildren, setCountChildren] = useState(0);
   const [totalPrice, setTotalPrice] = useState(basePrice);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
 
   useEffect(() => {
     const calculateTotalPrice = () => {
@@ -54,308 +54,282 @@ const FormTour: React.FC<FormTourProps> = ({ basePrice }) => {
   };
 
   return (
-    <div>
+    <div className="
+    h-[60%]
+    "
+    >
       <form className="
-      ml-[45px] 
-      bg-Gray-4 
-      p-8 
-      w-[369px]
-      "
-      >
+        ml-[45px] 
+        bg-Gray-4 
+        p-8 
+        w-[369px]
+        ">
         <div className="
-        flex 
-        gap-1 
-        justify-start 
-        items-center
-        "
-        >
+          flex 
+          gap-1 
+          justify-start 
+          items-center
+          ">
           <p className="
-          font-work-sans 
-          font-bold 
-          text-2xl
-          "
-          >
+            font-work-sans 
+            font-bold 
+            text-2xl
+            ">
             ${basePrice}
-            </p>
+          </p>
           <p> / per person</p>
         </div>
         <div className="
-        mt-5 
-        h-[1px] 
-        w-full 
-        bg-Gray-3
-        "></div>
+          mt-5 
+          h-[1px] 
+          w-full 
+          bg-Gray-3
+          "></div>
 
         <h1 className="
-        font-inter 
-        text-sm 
-        font-semibold 
-        mt-7
-        "
-        >
+          font-inter 
+          text-sm 
+          font-semibold 
+          mt-7
+          ">
           Date
-          </h1>
+        </h1>
         <input
           type="date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
+          defaultValue={initialDate}
           className="
-          mt-1 
-          w-full 
-          h-[40px] 
-          bg-Gray-4 
-          border-2 
-          border-Gray-3 
-          rounded-md 
-          p-2
-          "
+            mt-1 
+            w-full 
+            h-[40px] 
+            bg-Gray-4 
+            border-2 
+            border-Gray-3 
+            rounded-md 
+            p-2
+            "
+            disabled
         />
 
         <h1 className="
-        font-inter 
-        text-sm 
-        font-semibold 
-        mt-5
-        "
-        >
+          font-inter 
+          text-sm 
+          font-semibold 
+          mt-5
+          ">
           Time
-          </h1>
+        </h1>
         <input
-          type="time"
-          value={selectedTime}
-          onChange={(e) => setSelectedTime(e.target.value)}
+          type="text"
+          defaultValue={Time}
           className="
-          mt-1 
-          w-full 
-          h-[40px] 
-          bg-Gray-4 
-          border-2 
-          border-Gray-3 
-          rounded-md 
-          p-2
-          "
+            mt-1 
+            w-full 
+            h-[40px] 
+            bg-Gray-4 
+            border-2 
+            border-Gray-3 
+            rounded-md 
+            p-2
+            "
+            disabled
         />
 
         <h1 className="
-        font-inter 
-        text-sm 
-        font-semibold 
-        mt-5
-        "
-        >
+          font-inter 
+          text-sm 
+          font-semibold 
+          mt-5
+          ">
           Ticket
-          </h1>
+        </h1>
 
         <div className="
-        flex 
-        gap-2 
-        mt-2 
-        justify-between
-        "
-        >
+          flex 
+          gap-2 
+          mt-2 
+          justify-between
+          ">
           <p className="
-          font-inter 
-          text-sm
-          "
-          >
+            font-inter 
+            text-sm
+            ">
             Adults (18+ years)
-            </p>
+          </p>
           <div className="
-          flex 
-          gap-2
-          "
-          >
+            flex 
+            gap-2
+            ">
             <button onClick={decrementAdults} className="
-            h-8 
-            w-8 
-            border 
-            border-solid 
-            border-Gray-3 
-            text-lg
-            "
-            >
+              h-8 
+              w-8 
+              border 
+              border-solid 
+              border-Gray-3 
+              text-lg
+              ">
               -
-              </button>
+            </button>
             <div className="
-            h-8 
-            w-8 
-            border 
-            border-solid 
-            border-Gray-3 
-            text-lg 
-            text-center
-            "
-            >
+              h-8 
+              w-8 
+              border 
+              border-solid 
+              border-Gray-3 
+              text-lg 
+              text-center
+              ">
               {countAdults}
-              </div>
+            </div>
             <button onClick={incrementAdults} className="
-            h-8 
-            w-8 
-            border 
-            border-solid 
-            border-Gray-3 
-            text-lg
-            "
-            >
+              h-8 
+              w-8 
+              border 
+              border-solid 
+              border-Gray-3 
+              text-lg
+              ">
               +
-              </button>
+            </button>
           </div>
         </div>
 
         <div className="
-        flex 
-        gap-2 
-        mt-2 
-        justify-between
-        "
-        >
+          flex 
+          gap-2 
+          mt-2 
+          justify-between
+          ">
           <p className="
-          font-inter 
-          text-sm
-          "
-          >
+            font-inter 
+            text-sm
+            ">
             Kids (12+ years)
-            </p>
+          </p>
           <div className="
-          flex 
-          gap-2
-          "
-          >
+            flex 
+            gap-2
+            ">
             <button onClick={decrementKids} className="
-            h-8 
-            w-8 
-            border 
-            border-solid 
-            border-Gray-3 
-            text-lg
-            "
-            >
+              h-8 
+              w-8 
+              border 
+              border-solid 
+              border-Gray-3 
+              text-lg
+              ">
               -
-              </button>
+            </button>
             <div className="
-            h-8 
-            w-8 
-            border 
-            border-solid 
-            border-Gray-3 
-            text-lg 
-            text-center
-            "
-            >
+              h-8 
+              w-8 
+              border 
+              border-solid 
+              border-Gray-3 
+              text-lg 
+              text-center
+              ">
               {countKids}
-              </div>
+            </div>
             <button onClick={incrementKids} className="
-            h-8 
-            w-8 
-            border 
-            border-solid 
-            border-Gray-3 
-            text-lg
-            "
-            >
+              h-8 
+              w-8 
+              border 
+              border-solid 
+              border-Gray-3 
+              text-lg
+              ">
               +
-              </button>
+            </button>
           </div>
         </div>
 
         <div className="
-        flex 
-        gap-2 
-        mt-2 
-        justify-between
-        "
-        >
-          <p className="
-          font-inter 
-          text-sm
-          "
-          >
-            Children (3+ years)
-            </p>
-          <div className="
           flex 
-          gap-2
-          "
-          >
+          gap-2 
+          mt-2 
+          justify-between
+          ">
+          <p className="
+            font-inter 
+            text-sm
+            ">
+            Children (3+ years)
+          </p>
+          <div className="
+            flex 
+            gap-2
+            ">
             <button onClick={decrementChildren} className="
-            h-8 
-            w-8 
-            border 
-            border-solid 
-            border-Gray-3 
-            text-lg
-            "
-            >
+              h-8 
+              w-8 
+              border 
+              border-solid 
+              border-Gray-3 
+              text-lg
+              ">
               -
-              </button>
+            </button>
             <div className="
-            h-8 
-            w-8 
-            border 
-            border-solid 
-            border-Gray-3 
-            text-lg 
-            text-center
-            "
-            >
+              h-8 
+              w-8 
+              border 
+              border-solid 
+              border-Gray-3 
+              text-lg 
+              text-center
+              ">
               {countChildren}
-              </div>
+            </div>
             <button onClick={incrementChildren} className="
-            h-8 
-            w-8 
-            border 
-            border-solid 
-            border-Gray-3 
-            text-lg
-            "
-            >
+              h-8 
+              w-8 
+              border 
+              border-solid 
+              border-Gray-3 
+              text-lg
+              ">
               +
-              </button>
+            </button>
           </div>
         </div>
 
         <div className="
-        h-[1px] 
-        w-full 
-        bg-Gray-3 
-        mt-5
-        "
-        ></div>
+          h-[1px] 
+          w-full 
+          bg-Gray-3 
+          mt-5
+          "></div>
         <div className="
-        flex 
-        justify-between 
-        mt-5 
-        items-center
-        "
-        >
+          flex 
+          justify-between 
+          mt-5 
+          items-center
+          ">
           <h1 className="
-          font-inter 
-          text-sm
-          "
-          >
+            font-inter 
+            text-sm
+            ">
             Total</h1>
           <p className="
-          font-work-sans 
-          font-bold 
-          text-2xl 
-          text-Salmon-Red
-          "
-          >
+            font-work-sans 
+            font-bold 
+            text-2xl 
+            text-Salmon-Red
+            ">
             ${totalPrice.toFixed(2)}
-            </p>
+          </p>
         </div>
         <button className="
-        bg-Salmon-Red 
-        text-white 
-        w-full 
-        h-9 
-        rounded-md 
-        mt-5 
-        text-center 
-        font-inter 
-        text-sm
-        "
-        >
+          bg-Salmon-Red 
+          text-white 
+          w-full 
+          h-9 
+          rounded-md 
+          mt-5 
+          text-center 
+          font-inter 
+          text-sm
+          ">
           Book now
         </button>
       </form>
