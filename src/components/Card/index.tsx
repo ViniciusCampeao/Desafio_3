@@ -12,6 +12,7 @@ interface CardProps {
   TourDuration: number;
   TourPrice: number;
   TourId: number;
+  Reload?: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -24,11 +25,16 @@ const Card: React.FC<CardProps> = ({
   TourDuration,
   TourPrice,
   TourId,
+  Reload = false,
 }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
     navigate(`/tour/${TourId}`);
+    if (Reload)
+        {
+            window.location.reload();
+        }
   };
 
   return (
@@ -37,13 +43,16 @@ const Card: React.FC<CardProps> = ({
     w-[270px]
     h-[401px]
     relative
+    cursor-pointer
+    hover:shadow-lg
+    bg-Gray-4
     "
     onClick={handleCardClick}
     >
       <div className="
       absolute
       rounded-full
-      bg-Gray-3
+      bg-Gray-4
       flex
       justify-center
       items-center
@@ -85,7 +94,7 @@ const Card: React.FC<CardProps> = ({
         <h1
           className="
       text-lg
-      font-semibold
+      font-extrabold
       font-work-sans
       mt-2
       "
@@ -153,7 +162,7 @@ const Card: React.FC<CardProps> = ({
         <div className="
         flex
         flex-row
-        mt-3
+        mt-4
         "
         >
         <p className="
