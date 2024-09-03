@@ -1,3 +1,4 @@
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TourDetailsComponent from "../components/TourDetails";
 
@@ -6,6 +7,7 @@ const TourDetails = () => {
     <div>
       <Header/>
       <TourDetailsComponent/>
+      <Footer />
     </div>
   );
 }
