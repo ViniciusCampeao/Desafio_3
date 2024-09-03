@@ -16,7 +16,7 @@ const Header: React.FC = () => {
 
   const handleLogoutClick = async () => {
     await auth.signOut();
-    setShowLogout(false); // Oculta o menu de logout após a saída
+    setShowLogout(false);
   };
 
   if (loading) {
