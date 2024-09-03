@@ -1,3 +1,4 @@
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Bg2 from "../components/SecondSectionBg";
 import Tour from "../components/Tour";
@@ -13,6 +14,7 @@ const Tours = () => {
         subtitle2="Tour Package"
       />
       <Tour/>
+      <Footer />
     </div>
   );
 }

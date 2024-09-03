@@ -1,3 +1,4 @@
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Sign from "../components/SignIn";
 
@@ -6,6 +7,7 @@ const Login = () => {
     <div>
       <Header />
       <Sign />
+      <Footer />
     </div>
   )
 }
