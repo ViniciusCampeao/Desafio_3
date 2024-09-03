@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaGoogle } from "react-icons/fa";
-import { auth } from '../../firebaseConfig';
-import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { FirebaseError } from 'firebase/app';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaFacebook, FaGoogle } from "react-icons/fa";
+import { auth } from "../../firebaseConfig";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  FacebookAuthProvider,
+} from "firebase/auth";
+import { FirebaseError } from "firebase/app";
 
 const SignIn: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
-
 
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
       setErrorMessage(null);
-      navigate('/');
+      navigate("/");
     } catch (error) {
       if (error instanceof FirebaseError) {
         setErrorMessage(error.message);
@@ -25,31 +30,46 @@ const SignIn: React.FC = () => {
         setErrorMessage("Unable to login with Google, try again");
       }
     }
-  }
+  };
+
+  const handleFacebookLogin = async () => {
+    const provider = new FacebookAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      setErrorMessage(null);
+      navigate("/");
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage("Unable to login with Facebook, try again");
+      }
+    }
+  };
 
   const handleEmailSignIn = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setErrorMessage(null);
-      navigate('/');
+      navigate("/");
     } catch (error) {
       if (error instanceof FirebaseError) {
         switch (error.code) {
-          case 'auth/user-not-found':
-            setErrorMessage('User not found');
+          case "auth/user-not-found":
+            setErrorMessage("User not found");
             break;
-          case 'auth/wrong-password':
-            setErrorMessage('Wrong password');
+          case "auth/wrong-password":
+            setErrorMessage("Wrong password");
             break;
           default:
-            setErrorMessage('Unable to login, try again');
+            setErrorMessage("Unable to login, try again");
+        }
+      } else {
+        setErrorMessage("Unable to login, try again");
       }
-    } else {
-      setErrorMessage('Unable to login, try again');
     }
-  }
-}
+  };
 
   const handleEmailSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -59,33 +79,34 @@ const SignIn: React.FC = () => {
     } catch (error) {
       if (error instanceof FirebaseError) {
         switch (error.code) {
-          case 'auth/email-already-in-use':
-            setErrorMessage('Email already in use');
+          case "auth/email-already-in-use":
+            setErrorMessage("Email already in use");
             break;
-          case 'auth/invalid-email':
-            setErrorMessage('Invalid email');
+          case "auth/invalid-email":
+            setErrorMessage("Invalid email");
             break;
-          case 'auth/weak-password':
-            setErrorMessage('Weak password');
+          case "auth/weak-password":
+            setErrorMessage("Weak password");
             break;
           default:
-            setErrorMessage('Unable to create account, try again');
+            setErrorMessage("Unable to create account, try again");
         }
       } else {
-        setErrorMessage('Unable to create account, try again');
+        setErrorMessage("Unable to create account, try again");
       }
     }
-  }
-
+  };
 
   return (
-    <div className="
+    <div
+      className="
       grid
       grid-cols-2
       place-items-center
     "
     >
-      <div className="
+      <div
+        className="
         h-auto
         w-[70%]
         bg-[#fff]
@@ -95,7 +116,8 @@ const SignIn: React.FC = () => {
         p-12
         "
       >
-        <h1 className="
+        <h1
+          className="
           text-center
           text-4xl
           mb-8
@@ -112,8 +134,8 @@ const SignIn: React.FC = () => {
               flex-col
               items-center
               justify-center
+              font-work-sans
             "
-
           >
             <input
               type="email"
@@ -144,8 +166,10 @@ const SignIn: React.FC = () => {
                 rounded-sm
                 text-sm
               "
-              />
-              {errorMessage && <p className="text-red-500 text-xs mt-1">{errorMessage}</p>}
+            />
+            {errorMessage && (
+              <p className="text-red-500 text-xs mt-1">{errorMessage}</p>
+            )}
             <button
               onClick={handleEmailSignIn}
               type="button"
@@ -167,9 +191,9 @@ const SignIn: React.FC = () => {
               Login
             </button>
             <button
-            onClick={handleEmailSignUp}
-            type="button"
-            className="
+              onClick={handleEmailSignUp}
+              type="button"
+              className="
               mt-1.5
               p-2
               w-full
@@ -182,14 +206,15 @@ const SignIn: React.FC = () => {
               transition-all
               duration-300
               ease-in-out
-              text-md"
+              text-md
+              "
             >
               Sign Up
             </button>
             <button
-            onClick={handleGoogleLogin}
-            type="button"
-            className="
+              onClick={handleGoogleLogin}
+              type="button"
+              className="
               mt-12
               p-2
               w-full
@@ -211,14 +236,42 @@ const SignIn: React.FC = () => {
               <FaGoogle className="text-blue-900" />
               Sign in with Google
             </button>
+            <button
+              onClick={handleFacebookLogin}
+              type="button"
+              className="
+                mt-4
+                p-2
+                w-full
+                max-w-sm
+              bg-white
+                rounded-md
+                border 
+                border-black
+                hover:bg-gray-100
+                transition-all
+                duration-300
+                ease-in-out
+                text-md
+                flex
+                gap-2
+                justify-center
+              "
+            >
+              <FaFacebook className="text-blue-700" />
+              Sign in with Facebook
+            </button>
           </form>
         </div>
       </div>
       <div>
-        <img src="https://mybucketomyproject.s3.us-east-2.amazonaws.com/LoginBg.jpg" alt="login" />
+        <img
+          src="https://mybucketomyproject.s3.us-east-2.amazonaws.com/LoginBg.jpg"
+          alt="login"
+        />
       </div>
     </div>
   );
-}
+};
 
 export default SignIn;
