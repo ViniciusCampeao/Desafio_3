@@ -8,7 +8,7 @@ export interface Tour {
   maxPeople: number;
   countryId: number;
   cityId: number;
-  initialDate: Date;
+  initialDate: string;
   finalDate: Date;
   avarageRating?: number;
   duration: number;
@@ -27,7 +27,11 @@ export interface Review {
   description: string;
   tourId: number;
   userId: string;
-  createdAt?: Date;
+  userName: string;
+  createdAt: Date;
+  user?: {
+    name: string;
+  };
 }
 
 
