@@ -1,50 +1,86 @@
-# React + TypeScript + Vite
+Projeto 3 - README
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Visão Geral
+Este projeto é uma aplicação web para exibir e gerenciar pacotes de turismo. Os usuários podem explorar diferentes pacotes de turismo, fazer orçamentos de acordo com pessoas que irão ao tour, visualizar detalhes de tours específicos e adicionar avaliações. A aplicação inclui um sistema de autenticação, protegendo rotas sensíveis e fornecendo acesso restrito a usuários autenticados.
 
-Currently, two official plugins are available:
+Funcionalidades Principais
+Autenticação de Usuário: Login e registro usando Firebase Authentication (Email, Google, Facebook).
+Exploração de Tours: Exibição de uma lista de pacotes de turismo disponíveis.
+Detalhes do Tour: Visualização detalhada de um tour específico, incluindo a cidade e o país.
+Avaliações: Usuários podem adicionar avaliações para os tours.
+Proteção de Rotas: Apenas usuários autenticados podem acessar certas páginas, como a lista de tours e detalhes de tours.
+Filtragem: Pode ser filtrado por nome ou range de valor.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Estrutura do Projeto
+O projeto é dividido em várias páginas e componentes, cada um responsável por uma parte específica da aplicação.
 
-## Expanding the ESLint configuration
+Páginas
+Home: Página inicial da aplicação.
+Login: Página de autenticação, permitindo login e registro.
+Tours: Lista de todos os pacotes de turismo (acesso restrito a usuários autenticados).
+TourDetails: Página de detalhes de um tour específico (acesso restrito a usuários autenticados).
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-- Configure the top-level `parserOptions` property like this:
+Configuração do Ambiente
+Pré-requisitos
+Node.js instalado
+Firebase Configurado (Firebase Authentication e Firestore)
+Dependências instaladas via npm
+Instalação
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Clone o repositório para a sua máquina local:
+bash
+Copiar código
+git clone https://github.com/ViniciusCampeao/Desafio_3
+cd Desafio_3
+Instale as dependências do projeto:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+bash
+Copiar código
+npm install
+Configure as variáveis de ambiente para o Firebase em um arquivo .env:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+makefile
+Copiar código
+REACT_APP_FIREBASE_API_KEY=your-api-key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your-auth-domain
+REACT_APP_FIREBASE_PROJECT_ID=your-project-id
+REACT_APP_FIREBASE_STORAGE_BUCKET=your-storage-bucket
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+REACT_APP_FIREBASE_APP_ID=your-app-id
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+
+Inicie o servidor de desenvolvimento:
+bash
+Copiar código
+npm start
+Acesse a aplicação em http://localhost:3000.
+
+Navegação
+Página Inicial: Acesse a página principal onde você pode navegar para as outras seções.
+Login: Faça login ou registre-se para acessar as funcionalidades protegidas.
+Tours: Após o login, navegue até a lista de tours.
+Detalhes do Tour: Clique em um tour para ver seus detalhes.
+API Client
+A aplicação se comunica com um backend para gerenciar dados de tours, cidades, países, tipos, e usuários. A comunicação é feita através de um cliente Axios configurado.
+
+Exemplos de Uso
+Buscar Tours;
+Criar uma Nova Review;
+Firebase Authentication:
+Login com Google;
+Login com Email/Password;
+
+
+Contribuição
+Se você deseja contribuir para este projeto:
+
+Faça um fork do repositório.
+Crie uma nova branch (git checkout -b feature/nova-feature).
+Faça suas alterações e commit (git commit -am 'Adiciona nova feature').
+Faça o push para a branch (git push origin feature/nova-feature).
+Abra um Pull Request.
+
+
+Licença
+Este projeto está licenciado sob a licença MIT. Sinta-se à vontade para usar, modificar e distribuir o código conforme necessário.
