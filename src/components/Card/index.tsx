@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate} from "react-router-dom";
 import { CiClock1, CiHeart, CiStar } from "react-icons/ci";
 
 interface CardProps {
@@ -10,6 +11,7 @@ interface CardProps {
   AmountReview: number;
   TourDuration: number;
   TourPrice: number;
+  TourId: number;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -21,7 +23,14 @@ const Card: React.FC<CardProps> = ({
   AmountReview,
   TourDuration,
   TourPrice,
+  TourId,
 }) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/tour/${TourId}`);
+  };
+
   return (
     <div
       className="
@@ -29,6 +38,7 @@ const Card: React.FC<CardProps> = ({
     h-[401px]
     relative
     "
+    onClick={handleCardClick}
     >
       <div className="
       absolute

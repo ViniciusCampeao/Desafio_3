@@ -104,6 +104,7 @@ function CarouselComponent() {
               AmountReview={15} 
               TourDuration={tour.duration}
               TourPrice={tour.price}
+              TourId={tour.id ?? 0}            
             />
           </SwiperSlide>
         ))}
