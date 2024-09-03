@@ -1,0 +1,37 @@
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80%;
+  height: 8px;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: red;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: red;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.slider::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background: red;
+  cursor: pointer;
+  border-radius: 50%;
+}

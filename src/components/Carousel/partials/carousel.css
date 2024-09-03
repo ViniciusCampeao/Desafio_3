@@ -1,0 +1,7 @@
+.mySwiper .swiper-pagination {
+  top: 410px !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #FF6F61;
+}
